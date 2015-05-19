@@ -139,7 +139,7 @@ static const UIViewAnimationOptions DefaultSwipedAnimationCurve = UIViewAnimatio
 
 static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocity)
 {
-    NSTimeInterval animationDuration = pointsToAnimate / fabsf(velocity);
+    NSTimeInterval animationDuration = pointsToAnimate / fabs(velocity);
     // adjust duration for easing curve, if necessary
     if (DefaultSwipedAnimationCurve != UIViewAnimationOptionCurveLinear) animationDuration *= 1.25;
     return animationDuration;
@@ -1203,7 +1203,7 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
         if (_controllers[side] == controller) return side;
     }
     
-    return NSNotFound;
+    return (IIViewDeckSide)NSNotFound;
 }
 
 
@@ -1419,7 +1419,7 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
     
     if (duration == DEFAULT_DURATION) duration = [self openSlideDuration:animated];
     
-    UIViewAnimationOptions options = UIViewAnimationOptionLayoutSubviews | UIViewAnimationOptionBeginFromCurrentState;
+    __block UIViewAnimationOptions options = UIViewAnimationOptionLayoutSubviews | UIViewAnimationOptionBeginFromCurrentState;
     
     IIViewDeckControllerBlock finish = ^(IIViewDeckController *controller, BOOL success) {
         if (!success) {
@@ -2498,7 +2498,7 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
                 
                 // Animation duration based on velocity
                 CGFloat maxDistance = CGRectGetWidth(self.view.frame) - self.leftSize;
-                CGFloat pointsToAnimate = fabsf(maxDistance - self.slidingControllerView.frame.origin.x);
+                CGFloat pointsToAnimate = fabs(maxDistance - self.slidingControllerView.frame.origin.x);
                 NSTimeInterval animationDuration = durationToAnimate(pointsToAnimate, orientationVelocity);
                 
                 if (v > 0) {
